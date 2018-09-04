@@ -3,19 +3,48 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>activerecord</title>
+    <title>Micro Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="main.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="css/reset.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
+    <script src="javascript/main.js"></script>
 </head>
 <body>
     
     <h1>LAYOUT</h1>
-    <a href='/'><p>LOG IN</p></a>
-    <a href='/sign_out'><p>SIGN OUT</p></a>
+    <a href='/'><button>HOME</button></a>
+    <a href='/registration'><button>SIGN</button></a>
+    <form method="POST" action="/sign-out">
+    <button>SIGN OUT</button>
+    </form>
     
     <div id='container'>
+        <% if $user %>
+            <p> <%= "#{$user.username} Is Logged In" %> </p>
+        <% else %>
+            <p>No User Is Logged In</p>
+        <% end %>
+
+        <% if flash[:notice] %>
+            <div class='flash notice'>
+                <%= flash[:notice] %>
+            </div>
+        <%end%>
+
+        <% if flash[:error] %>
+            <div class='flash error'>
+                <%= flash[:error] %>
+            </div>
+        <%end%>
+
+        <% if flash[:success] %>
+            <div class='flash success'>
+                <%= flash[:success] %>
+            </div>
+        <%end%>
+
         <%= yield%>
+
     </div>
 
 </body>

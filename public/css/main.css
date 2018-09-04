@@ -1,0 +1,30 @@
+label, input {
+    display: block;
+}
+
+label {
+    float: left;
+}
+
+input {
+    float: right;
+}
+
+.flash {
+    padding: 40px 0;
+    width: 200px;
+    color: white;
+    text-align: center;
+}
+
+.success {
+    background-color: green;
+}
+
+.error {
+    background-color: red;
+}
+
+.notice {
+    background-color: yellow;
+}
