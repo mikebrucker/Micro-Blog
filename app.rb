@@ -24,6 +24,15 @@ get '/blog' do
     erb :blog
 end
 
+get '/view_user' do 
+    if !session[:user_id]
+        redirect '/'
+    end
+    
+    erb :view_user
+end
+
+
 get '/registration' do
     if session[:user_id]
         redirect '/blog'
