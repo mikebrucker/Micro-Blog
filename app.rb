@@ -3,6 +3,7 @@ require 'sinatra/activerecord'
 require 'sinatra/flash'
 require 'bundler/setup'
 require './models/user.rb'
+require './models/profile.rb'
 
 enable :sessions
 
@@ -27,11 +28,12 @@ get '/registration' do
 end
 
 post '/register' do
-    if params[:user][:password] == params[:confirm_password] && !User.where(username: [:user][:username]).first
-        User.create[:user]
-        user_id = User.where(username: [:username]).first.id
-        Profile.create(fname: params[:fname], lname: params[:lname], email: params[:email], user_id: user_id)
+    if params[:user][:password] == params[:confirm_password]
+        User.create(params[:user])
+        user = User.where(username: params[:user][:username]).first
+        Profile.create(fname: params[:profile][:fname], lname: params[:profile][:lname], email: params[:profile][:email], user_id: user.id)
     end
+    redirect '/'
 end
 
 post '/sign-in' do
