@@ -24,6 +24,9 @@ get '/blog' do
 end
 
 get '/registration' do
+    if session[:user_id]
+        redirect '/blog'
+    end
     erb :registration
 end
 
