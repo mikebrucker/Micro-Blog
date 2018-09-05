@@ -1,0 +1,9 @@
+
+<div class = "views">
+    <ul>
+        <% @user = User.all %>
+        <% @user.each do |user| %>
+        <li><%= user.username %></li>
+        <% end %>
+    </ul>
+</div>

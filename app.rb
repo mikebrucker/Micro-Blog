@@ -1,7 +1,7 @@
+require 'bundler/setup'
 require 'sinatra'
 require 'sinatra/activerecord'
 require 'sinatra/flash'
-require 'bundler/setup'
 require './models/user.rb'
 require './models/profile.rb'
 
@@ -22,6 +22,15 @@ get '/blog' do
     end
     erb :blog
 end
+
+get '/view_user' do 
+    if !session[:user_id]
+        redirect '/'
+    end
+    
+    erb :view_user
+end
+
 
 get '/registration' do
     if session[:user_id]
