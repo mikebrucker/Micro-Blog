@@ -4,10 +4,10 @@
 
 <% Post.all.reverse[0..9].each do |post| %>
 
-    <h1><%= User.find(post.user_id).username %></h1>
+    <h1><%= "#{User.find(post.user_id).username}'s Post:" %></h1>
     
-    <h1><%= post.title %></h1>
+    <h1><%= "Title: #{post.title}" %></h1>
 
-    <p><%= post.body %></p>
+    <p><%= "Body: #{post.body}" %></p>
 
 <% end %>

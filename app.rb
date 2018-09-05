@@ -28,10 +28,8 @@ get '/view_user' do
     if !session[:user_id]
         redirect '/'
     end
-    
     erb :view_user
 end
-
 
 get '/registration' do
     if session[:user_id]
@@ -47,6 +45,20 @@ get '/create_post' do
     erb :create_post
 end
 
+get '/profile' do
+    if !session[:user_id]
+        redirect '/'
+    end
+    erb :profile
+end
+
+get '/delete_account' do
+    if !session[:user_id]
+        redirect '/'
+    end
+    erb :delete_account
+end
+
 post '/create-post' do
     if params[:post][:title].length > 0 && params[:post][:body].length > 0
         user = current_user
@@ -55,9 +67,12 @@ post '/create-post' do
     end
 end
 
-
 post '/register' do
-    if params[:user][:password] == params[:confirm_password]
+    if User.where(username: params[:user][:username]).first
+        flash[:notice] = 'Username Already Taken'
+        redirect '/registration'
+        return
+    elsif params[:user][:password] == params[:confirm_password] && !User.where(username: params[:user][:username]).first
         User.create(params[:user])
         user = User.where(username: params[:user][:username]).first
         Profile.create(fname: params[:profile][:fname], lname: params[:profile][:lname], email: params[:profile][:email], user_id: user.id)
