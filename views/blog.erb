@@ -1,1 +1,13 @@
-BLOG
+<a href='/create_post'><button>CREATE POST</button></a>
+
+<h1>LAST 10 POSTS</h1>
+
+<% Post.all.reverse[0..9].each do |post| %>
+
+    <h1><%= User.find(post.user_id).username %></h1>
+    
+    <h1><%= post.title %></h1>
+
+    <p><%= post.body %></p>
+
+<% end %>

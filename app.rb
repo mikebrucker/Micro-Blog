@@ -1,9 +1,10 @@
+require 'bundler/setup'
 require 'sinatra'
 require 'sinatra/activerecord'
 require 'sinatra/flash'
-require 'bundler/setup'
 require './models/user.rb'
 require './models/profile.rb'
+require './models/post.rb'
 
 enable :sessions
 
@@ -29,6 +30,22 @@ get '/registration' do
     end
     erb :registration
 end
+
+get '/create_post' do
+    if !session[:user_id]
+        redirect '/'
+    end
+    erb :create_post
+end
+
+post '/create-post' do
+    if params[:post][:title].length > 0 && params[:post][:body].length > 0
+        user = current_user
+        Post.create(title: params[:post][:title], body: params[:post][:body], user_id: user.id)
+        redirect '/blog'
+    end
+end
+
 
 post '/register' do
     if params[:user][:password] == params[:confirm_password]
