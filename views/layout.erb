@@ -22,8 +22,9 @@
 
     
     <div id='container'>
-        <% if $user %>
-            <p> <%= "#{$user.username} Is Logged In" %> </p>
+        <% user = current_user %>
+        <% if user %>
+            <p> <%= "#{user.username} Is Logged In" %> </p>
         <% else %>
             <p>No User Is Logged In</p>
         <% end %>
