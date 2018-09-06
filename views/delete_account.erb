@@ -1,6 +1,14 @@
-<h4>Are you sure you want to delete this Account?</h4>
 <% user = current_user %>
-<form method="POST" action="/delete_acc">
+
+<h1><%= user.profile.fname%>, Are You Sure You Want To Delete Your Account?</h1>
+
+<form method="POST" action="/delete-account">
     
-<label for="password">Confirm your password</label>
-<input type="password" id='password' name="password" />
+    <label for="delete_password">Enter Password</label>
+    <input type="password" id='delete_password' name="delete_password" />
+
+    <label for="delete_password_confirm">Confirm Your Password</label>
+    <input type="password" id='delete_password_confirm' name="delete_password_confirm" />
+
+    <input type="submit">
+</form>

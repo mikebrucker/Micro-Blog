@@ -32,53 +32,11 @@ get '/edit_account' do
     erb :edit_account
 end
 
-post '/edit-account' do 
-    user = current_user
-    if params[:account_password] == user.password
-        user.profile.update_attributes(fname: params[:fname], lname: params[:lname], email: params[:email])
-        flash[:success] = "Your Profile has been Updated"
-        redirect '/profile'
-    else
-        flash[:notice] = "Incorrect Password"
-    end
-end
-
-get '/edit_password' do
-    am_i_logged_in    
-    erb :edit_password
-end
-
-post '/edit-password' do
-    user = current_user
-    if params[:old_password] == "" || params[:new_password] == "" || params[:confirm_password] == ""
-        flash[:error] = "Please Fill Out All Fields."
-    end
-    if params[:old_password] == user.password
-        if params[:new_password] == params[:confirm_password]
-            user.update_attributes(password: params[:new_password])
-            flash[:success] = "Your password has been updated."
-        end
-        redirect '/'
-    else
-        flash[:notice] = "Passwords Do Not Match"
-        redirect '/edit_password'
-    end
-end
-
 get '/registration' do
     if session[:user_id]
         redirect '/blog'
     end
     erb :registration
-end
-
-post '/register' do
-    if params[:user][:password] == params[:confirm_password]
-        User.create(params[:user])
-        user = User.where(username: params[:user][:username]).first
-        Profile.create(fname: params[:profile][:fname], lname: params[:profile][:lname], email: params[:profile][:email], user_id: user.id)
-    end
-    redirect '/'
 end
 
 get '/create_post' do
@@ -104,15 +62,52 @@ post '/create-post' do
     end
 end
 
+post '/edit-account' do 
+    user = current_user
+    if params[:account_password] == user.password
+        user.profile.update_attributes(fname: params[:fname], lname: params[:lname], email: params[:email])
+        flash[:success] = "Your Profile has been Updated"
+        redirect '/profile'
+    else
+        flash[:notice] = "Incorrect Password"
+    end
+end
+
+post '/edit-password' do
+    user = current_user
+    if params[:old_password] == "" || params[:new_password] == "" || params[:confirm_password] == ""
+        flash[:error] = "Please Fill Out All Fields."
+    end
+    if params[:old_password] == user.password
+        if params[:new_password] == params[:confirm_password]
+            user.update_attributes(password: params[:new_password])
+            flash[:success] = "Your password has been updated."
+        end
+        redirect '/'
+    else
+        flash[:notice] = "Passwords Do Not Match"
+        redirect '/edit_password'
+    end
+end
+
 post '/register' do
     if User.where(username: params[:user][:username]).first
         flash[:notice] = 'Username Already Taken'
+        redirect '/registration'
+        return
+    elsif params[:user][:password] != params[:confirm_password]
+        flash[:notice] = "Passwords Don't Match"
+        redirect '/registration'
+        return
+    elsif params[:user][:password].length < 3
+        flash[:notice] = "Password Is Too Short"
         redirect '/registration'
         return
     elsif params[:user][:password] == params[:confirm_password] && !User.where(username: params[:user][:username]).first
         User.create(params[:user])
         user = User.where(username: params[:user][:username]).first
         Profile.create(fname: params[:profile][:fname], lname: params[:profile][:lname], email: params[:profile][:email], user_id: user.id)
+        flash[:success] = "Username Created"
     end
     redirect '/'
 end
@@ -122,7 +117,6 @@ post '/sign-in' do
     password = params[:password]
     if user && user.password == password
         session[:user_id] = user.id
-        $user = current_user
         flash[:success] = 'Successfully Logged In'
     else
         flash[:error] = 'Log In Failed'
@@ -138,15 +132,20 @@ post '/sign-out' do
     redirect '/'
 end
 
-get '/delete_accout' do 
-    if !session[:user_id]
-        redirect '/'
-    end
-    erb :delete_account
-end    
-
-post '/delete_acc' do
+post '/delete-account' do
     user = current_user
+    if params[:delete_password] == user.password && params[:delete_password_confirm] == user.password
+        sign_out
+        Post.where(user_id: user.id).delete_all
+        Profile.where(user_id: user.id).delete_all
+        User.delete(user)
+        flash[:error] = "#{user.username} Is Deleted"
+        redirect '/'
+    else
+        flash[:notice] = "Passwords Do Not Match"
+        redirect '/delete_account'
+    end
+end
 
 def current_user
     if session[:user_id]
@@ -156,7 +155,6 @@ end
 
 def sign_out
     session[:user_id] = nil
-    $user = nil
 end
 
 def am_i_logged_in
