@@ -138,7 +138,7 @@ post '/delete-account' do
         sign_out
         Post.where(user_id: user.id).delete_all
         Profile.where(user_id: user.id).delete_all
-        User.delete(user)
+        User.delete(user.id)
         flash[:error] = "#{user.username} Is Deleted"
         redirect '/'
     else
