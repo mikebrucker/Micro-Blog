@@ -1,6 +1,7 @@
 <% user = current_user %>
+
 <p><a href='/edit_account'><button>EDIT ACCOUNT</button></a></p>
-<p><a href='/delete_account'><button>DELETE ACCOUNT</button></a></p>
+
 <p><%= user.username%></p>
 <p><%= user.profile.fname%></p>
 <p><%= user.profile.lname%></p>
