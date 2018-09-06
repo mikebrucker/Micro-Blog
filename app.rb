@@ -27,9 +27,47 @@ end
 get '/view_user' do 
     if !session[:user_id]
         redirect '/'
-    end
-    
+    end    
     erb :view_user
+end
+
+get '/edit_account' do
+    if !session[:user_id]
+        redirect '/'
+    end    
+    erb :edit_account
+end
+
+post '/edit' do 
+    @user = current_user
+    if params[:user]!= ""
+        Profile.update(fname: params[:profile][:fname],lname: params[:profile][:lname], email: params[:profile][:email], user_id: user.id)
+        flash[:notice] = "Your Profile has been Updated"
+        redirect '/profile'
+    end
+end
+
+get '/edit_password' do
+    if !session[:user_id]
+        redirect '/'
+    end    
+    erb :edit_password
+end
+
+post '/edit_pwd' do
+    if params[:old_password] != ""  && params[:new_password] != "" && params[:confirm_password] != ""
+		if params[:old_password] == @user[:password] && params[:new_password] == params[:confirm_password]
+			User.update(@user[:id], password: params[:new_password])
+			flash[:notice] = "Your password has been updated."
+			redirect '/'
+		else
+			flash[:error] = "The info you enterd is incorrect."
+			redirect '/'
+		end
+	else 
+		flash[:error] = "Please fill in all password fields."
+		redirect '/'
+	end
 end
 
 
@@ -38,6 +76,15 @@ get '/registration' do
         redirect '/blog'
     end
     erb :registration
+end
+
+post '/register' do
+    if params[:user][:password] == params[:confirm_password]
+        User.create(params[:user])
+        user = User.where(username: params[:user][:username]).first
+        Profile.create(fname: params[:profile][:fname], lname: params[:profile][:lname], email: params[:profile][:email], user_id: user.id)
+    end
+    redirect '/'
 end
 
 get '/create_post' do
@@ -53,16 +100,6 @@ post '/create-post' do
         Post.create(title: params[:post][:title], body: params[:post][:body], user_id: user.id)
         redirect '/blog'
     end
-end
-
-
-post '/register' do
-    if params[:user][:password] == params[:confirm_password]
-        User.create(params[:user])
-        user = User.where(username: params[:user][:username]).first
-        Profile.create(fname: params[:profile][:fname], lname: params[:profile][:lname], email: params[:profile][:email], user_id: user.id)
-    end
-    redirect '/'
 end
 
 post '/sign-in' do

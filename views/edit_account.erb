@@ -1,0 +1,21 @@
+
+<h4>Update Your Profile</h4>
+<% user = current_user %>
+<form method="POST" action="/edit">
+
+    <label for="username">Username</label>
+    <p><%= user.username %></p>
+    <label for="fname">First Name</label>
+    <input type="text" id='fname' name="fname" placeholder= "<%= user.profile.fname %>" />
+
+    <label for="lname">Last Name</label>
+    <input type="text" id='lname' name="lname" placeholder= "<%= user.profile.lname %>"/>
+
+    <label for="email">Email</label>
+    <input type="text" id='email' name="email" placeholder= "<%= user.profile.email %>"/>
+
+    <input type="Submit" value ="Save Changes" />
+</form>
+
+<a href='/edit_password'><button>Change Password</button></a>
+<a href='/'><button>Delete Account</button></a>
