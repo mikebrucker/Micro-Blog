@@ -18,58 +18,52 @@ get '/' do
 end
 
 get '/blog' do
-    if !session[:user_id]
-        redirect '/'
-    end
+    am_i_logged_in
     erb :blog
 end
 
 get '/view_user' do 
-    if !session[:user_id]
-        redirect '/'
-    end    
+    am_i_logged_in    
     erb :view_user
 end
 
 get '/edit_account' do
-    if !session[:user_id]
-        redirect '/'
-    end    
+    am_i_logged_in    
     erb :edit_account
 end
 
-post '/edit' do 
-    @user = current_user
-    if params[:user]!= ""
-        Profile.update(fname: params[:profile][:fname],lname: params[:profile][:lname], email: params[:profile][:email], user_id: user.id)
-        flash[:notice] = "Your Profile has been Updated"
+post '/edit-account' do 
+    user = current_user
+    if params[:account_password] == user.password
+        user.profile.update_attributes(fname: params[:fname], lname: params[:lname], email: params[:email])
+        flash[:success] = "Your Profile has been Updated"
         redirect '/profile'
+    else
+        flash[:notice] = "Incorrect Password"
     end
 end
 
 get '/edit_password' do
-    if !session[:user_id]
-        redirect '/'
-    end    
+    am_i_logged_in    
     erb :edit_password
 end
 
-post '/edit_pwd' do
-    if params[:old_password] != ""  && params[:new_password] != "" && params[:confirm_password] != ""
-		if params[:old_password] == @user[:password] && params[:new_password] == params[:confirm_password]
-			User.update(@user[:id], password: params[:new_password])
-			flash[:notice] = "Your password has been updated."
-			redirect '/'
-		else
-			flash[:error] = "The info you enterd is incorrect."
-			redirect '/'
-		end
-	else 
-		flash[:error] = "Please fill in all password fields."
-		redirect '/'
-	end
+post '/edit-password' do
+    user = current_user
+    if params[:old_password] == "" || params[:new_password] == "" || params[:confirm_password] == ""
+        flash[:error] = "Please Fill Out All Fields."
+    end
+    if params[:old_password] == user.password
+        if params[:new_password] == params[:confirm_password]
+            user.update_attributes(password: params[:new_password])
+            flash[:success] = "Your password has been updated."
+        end
+        redirect '/'
+    else
+        flash[:notice] = "Passwords Do Not Match"
+        redirect '/edit_password'
+    end
 end
-
 
 get '/registration' do
     if session[:user_id]
@@ -88,23 +82,17 @@ post '/register' do
 end
 
 get '/create_post' do
-    if !session[:user_id]
-        redirect '/'
-    end
+    am_i_logged_in
     erb :create_post
 end
 
 get '/profile' do
-    if !session[:user_id]
-        redirect '/'
-    end
+    am_i_logged_in
     erb :profile
 end
 
 get '/delete_account' do
-    if !session[:user_id]
-        redirect '/'
-    end
+    am_i_logged_in
     erb :delete_account
 end
 
@@ -169,4 +157,10 @@ end
 def sign_out
     session[:user_id] = nil
     $user = nil
+end
+
+def am_i_logged_in
+    if !session[:user_id]
+        redirect '/'
+    end    
 end
