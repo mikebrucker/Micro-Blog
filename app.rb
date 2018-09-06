@@ -138,6 +138,16 @@ post '/sign-out' do
     redirect '/'
 end
 
+get '/delete_accout' do 
+    if !session[:user_id]
+        redirect '/'
+    end
+    erb :delete_account
+end    
+
+post '/delete_acc' do
+    user = current_user
+
 def current_user
     if session[:user_id]
         User.find(session[:user_id])

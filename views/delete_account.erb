@@ -1,1 +1,6 @@
-asdfs
+<h4>Are you sure you want to delete this Account?</h4>
+<% user = current_user %>
+<form method="POST" action="/delete_acc">
+    
+<label for="password">Confirm your password</label>
+<input type="password" id='password' name="password" />
