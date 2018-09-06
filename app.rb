@@ -49,6 +49,11 @@ get '/profile' do
     erb :profile
 end
 
+get '/edit_password' do
+    am_i_logged_in
+    erb :edit_password
+end
+
 get '/delete_account' do
     am_i_logged_in
     erb :delete_account
