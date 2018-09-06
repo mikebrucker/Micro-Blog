@@ -1,8 +1,95 @@
-label, input {
-    display: block;
+body {
+    max-width: 768px;
+    margin: 0 auto;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: center;
+    background: salmon;
+}
+
+nav {
+    font-size: 0;
+}
+
+button, .button, label, input, textarea {
+    display: inline-block;
+}
+
+nav button, .button {
+    outline: none;
+    border: 0px;
+    height: 60px;
+    font-size: 20px;
+    color: white;
+    background: darkgoldenrod;
+}
+
+nav button:hover {
+    background: gold;
+}
+
+nav button:active {
+    background: lime;
+    color: black;
+}
+
+button, .button {
+    width: 20%;
+}
+
+.button button {
+    width: 100%;
+}
+
+h1 {
+    text-align: center;
+    font-size: 36px;
+    margin: 10px 0;
+}
+
+.form {
+    margin: 0 auto;
+    padding: 20px 0;
+    max-width: 400px;
+    background: lawngreen;
+    text-align: left;
+}
+
+.form p {
+    margin: 10px auto;
+}
+
+.form button, .profile_button {
+    min-width: 100px;
+    height: 30px;
+    background: dimgray;
+    color: white;
+}
+
+.profile_button {
+    margin: 10px 0;
+}
+
+label {
+    position: relative;
+    left: 20px;
+}
+
+input {
+    position: absolute;
+    left: 50%;
+}
+
+textarea {
+    width: 90%;
+}
+
+.center {
+    margin: 0px auto;
+    text-align: center;
 }
 
 .flash {
+    margin: 0 auto;
     padding: 40px 0;
     width: 200px;
     color: white;

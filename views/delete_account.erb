@@ -2,13 +2,19 @@
 
 <h1><%= user.profile.fname%>, Are You Sure You Want To Delete Your Account?</h1>
 
-<form method="POST" action="/delete-account">
-    
-    <label for="delete_password">Enter Password</label>
-    <input type="password" id='delete_password' name="delete_password" />
+<form class='form' method="POST" action="/delete-account">
+    <p>
+        <label for="delete_password">Enter Password</label>
+        <input type="password" id='delete_password' name="delete_password" />
+    </p>
 
-    <label for="delete_password_confirm">Confirm Your Password</label>
-    <input type="password" id='delete_password_confirm' name="delete_password_confirm" />
+    <p>
+        <label for="delete_password_confirm">Confirm Your Password</label>
+        <input type="password" id='delete_password_confirm' name="delete_password_confirm" />
+    </p>
 
-    <input type="submit">
+    <p class='center'>
+        <button type="submit">SUBMIT</button>
+    </p>
+
 </form>

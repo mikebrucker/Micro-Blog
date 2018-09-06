@@ -1,9 +1,23 @@
-<form method="POST" action="/create-post">
-    <label for="title">Blog Title</label>
-    <input type="text" id="title" name="[post]title" />
+<form class='form' method="POST" action="/create-post">
 
-    <label for="body">Blog Body</label>
-    <textarea type="text" id='body' name="[post]body" rows="10" cols="100" maxlength="150"></textarea>
+    <p>
+        <label for="title">Blog Title</label>
+    </p>
 
-    <input type="submit" />
+    <p class='center'>
+        <textarea type="text" id="title" name="[post]title" rows="1" maxlength="40"></textarea>
+    </p>
+    
+    <p>
+        <label for="body">Blog Body</label>
+    </p>
+
+    <p class='center'>
+        <textarea type="text" id='body' name="[post]body" rows="10" maxlength="150"></textarea>
+    </p>
+    
+    <p class='center'>
+        <button type="submit">SUBMIT</button>
+    </p>
+
 </form>
