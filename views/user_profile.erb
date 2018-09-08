@@ -1,0 +1,6 @@
+<% user = current_user %>
+
+<% user.posts.each do |post| %>
+    <p><%= "Title: #{post.title}" %></p>
+    <p><%= "Body: #{post.body}" %></p>
+<% end %>

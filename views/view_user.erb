@@ -1,9 +1,10 @@
 
-<div class = "views">
-    <ul>
-        <% @user = User.all %>
-        <% @user.each do |user| %>
-        <li><%= user.username %></li>
-        <% end %>
-    </ul>
+<div class="views">
+    <% User.all.each do |user| %>
+        <form method='POST' action="user-profile">
+            <input type='hidden' id='hidden_id' name='hidden_id' value="<% user.id %>">
+            <button type='submit' class='user'>Profile: <%= user.username %></button>
+        </form>
+    <% end %>
 </div>
+
