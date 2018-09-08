@@ -10,4 +10,13 @@
 <% user.posts.each do |post| %>
     <p><%= "Title: #{post.title}" %></p>
     <p><%= "Body: #{post.body}" %></p>
+    <form method= "POST" action= "/edit-post">
+        <input type="Submit" id="edit-post" value="EDIT"/>    
+    </form>
+
+    <form method= "POST" action= "/delete-post">
+        <input type="Submit" id="delete-post" value="DELETE"/>
+    </form>
 <% end %>
+
+

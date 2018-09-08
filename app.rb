@@ -53,7 +53,7 @@ post '/edit-password' do
     if params[:old_password] == "" || params[:new_password] == "" || params[:confirm_password] == ""
         flash[:error] = "Please Fill Out All Fields."
     end
-    if params[:old_password] == user.password
+    if params[:old_password] == user.password   
         if params[:new_password] == params[:confirm_password]
             user.update_attributes(password: params[:new_password])
             flash[:success] = "Your password has been updated."
@@ -89,11 +89,6 @@ end
 get '/profile' do
     am_i_logged_in
     erb :profile
-end
-
-get '/delete_account' do
-    am_i_logged_in
-    erb :delete_account
 end
 
 post '/create-post' do
@@ -138,15 +133,40 @@ post '/sign-out' do
     redirect '/'
 end
 
-get '/delete_accout' do 
-    if !session[:user_id]
-        redirect '/'
-    end
+get '/delete_account' do
+    am_i_logged_in
     erb :delete_account
-end    
+end
 
 post '/delete_acc' do
     user = current_user
+    if params[:password] == user.password
+        Post.where(user_id: user.id).delete_all
+    
+        Profile.where(user_id: user.id).delete_all
+    
+        User.delete(user.id)
+        sign_out
+        redirect '/'
+    else 
+        flash[:error] = "Incorrect password..Account cannot be deleted"
+    end
+end
+
+post '/edit-post' do
+    Post.find(params[:id])
+    if user.Post.update_attributes(body: params[:post][:body])
+        flash[:success] = "Post Updated"
+        redirect '/profile' 
+    else
+        flash[:error] = "No Updates"
+    end
+end
+
+post '/delete-post' do
+    Post.delete(post.id)
+    redirect '/profile'
+end
 
 def current_user
     if session[:user_id]
