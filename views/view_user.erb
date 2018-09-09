@@ -2,8 +2,8 @@
 <div class="views">
     <% User.all.each do |user| %>
         <form method='POST' action="user-profile">
-            <input type='hidden' id='hidden_id' name='hidden_id' value="<% user.id %>">
-            <button type='submit' class='user'>Profile: <%= user.username %></button>
+            <input type='hidden' id='hidden_id' name='hidden_id' value="<%= user.id %>">
+            <button class='profile_button' type='submit' class='user'>Profile: <%= user.username %></button>
         </form>
     <% end %>
 </div>

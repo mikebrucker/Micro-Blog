@@ -10,4 +10,8 @@
 <% user.posts.each do |post| %>
     <p><%= "Title: #{post.title}" %></p>
     <p><%= "Body: #{post.body}" %></p>
+    <form method='POST' action="find-edit-post">
+        <input type='hidden' id='hidden_post' name='hidden_post' value="<%= post.id %>">
+        <button class='profile_button' type='submit'>EDIT POST</button>
+    </form>
 <% end %>
