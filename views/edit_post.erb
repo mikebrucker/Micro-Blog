@@ -1,0 +1,29 @@
+<h1>Update Your Post</h1>
+
+<form class='form' method="POST" action="/edit-post">
+
+    <p>
+        <label for="title">Title</label>
+        <input type="text" id='title' name="title" value= "<%= $post.title %>" />
+    </p>
+
+    <p>
+        <label for="body">Body</label>
+        <input type="text" id='body' name="body" value= "<%= $post.body %>" />
+    </p>
+
+    <p class='center'>
+        <button type="submit">SUBMIT</button>
+    </p>
+
+</form>
+
+<form class='form' method="POST" action="/delete-post">
+
+    <input type="hidden" name="hidden_post_delete" value="<%= $post.id %>" />
+
+    <p class='center'>
+        <button type="submit">DELETE POST</button>
+    </p>
+
+</form>
