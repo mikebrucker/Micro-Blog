@@ -1,14 +1,14 @@
-require 'bundler/setup'
 require 'sinatra'
 require 'sinatra/activerecord'
 require 'sinatra/flash'
+require 'bundler/setup'
 require './models/user.rb'
 require './models/profile.rb'
 require './models/post.rb'
 
 enable :sessions
 
-set :database, "sqlite3:micro_blogging_app.sqlite3"
+configure(:development){set :database, "sqlite3:micro_blogging_app.sqlite3"}
 
 get '/' do
     if session[:user_id]
