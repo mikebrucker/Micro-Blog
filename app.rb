@@ -1,7 +1,7 @@
-require 'bundler/setup'
 require 'sinatra'
 require 'sinatra/activerecord'
 require 'sinatra/flash'
+require 'bundler/setup'
 require './models/user.rb'
 require './models/profile.rb'
 require './models/post.rb'
