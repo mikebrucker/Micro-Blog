@@ -92,6 +92,16 @@ get '/delete_account' do
     erb :delete_account
 end
 
+get '/user_profile' do
+    am_i_logged_in
+    erb :user_profile
+end
+
+get '/edit_post' do
+    am_i_logged_in
+    erb :edit_post
+end
+
 post '/create-post' do
     if params[:post][:title].length > 0 && params[:post][:body].length > 0
         user = current_user
@@ -198,6 +208,30 @@ post '/delete-account' do
         flash[:notice] = "Passwords Do Not Match"
         redirect '/delete_account'
     end
+end
+
+post '/user-profile' do
+    $user = User.find(params[:hidden_id])
+    redirect '/user_profile'
+end
+
+post '/find-edit-post' do
+    user = current_user
+    if user.id == Post.find(params[:hidden_post]).user_id
+        $post = Post.find(params[:hidden_post])
+    end
+    redirect '/edit_post'
+end
+
+post '/edit-post' do
+    Post.find($post.id).update_attributes(title: params[:post][:title])
+    Post.find($post.id).update_attributes(body: params[:post][:body])
+    redirect '/profile'
+end
+
+post '/delete-post' do
+    Post.delete(params[:hidden_post_delete])
+    redirect '/profile'
 end
 
 def current_user

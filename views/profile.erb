@@ -1,6 +1,8 @@
 <% user = current_user %>
 
 <p><a href='/edit_account'><button class='profile_button'>EDIT ACCOUNT</button></a></p>
+<p><a href='/create_post'><button class='profile_button'>CREATE POST</button></a></p>
+
 
 <p><%= user.username%></p>
 <p><%= user.profile.fname%></p>
@@ -8,15 +10,16 @@
 <p><%= user.profile.email%></p>
 
 <% user.posts.each do |post| %>
-    <p><%= "Title: #{post.title}" %></p>
-    <p><%= "Body: #{post.body}" %></p>
-    <form method= "POST" action= "/edit-post">
-        <input type="Submit" id="edit-post" value="EDIT"/>    
-    </form>
 
-    <form method= "POST" action= "/delete-post">
-        <input type="Submit" id="delete-post" value="DELETE"/>
-    </form>
+    <div class="post">
+        <p><%= "Title: #{post.title}" %></p>
+        <p><%= "Body: #{post.body}" %></p>
+        <form class='center' method='POST' action="find-edit-post">
+            <input type='hidden' id='hidden_post' name='hidden_post' value="<%= post.id %>">
+            <button class='profile_button' type='submit'>EDIT POST</button>
+        </form>
+    </div>
+
 <% end %>
 
 

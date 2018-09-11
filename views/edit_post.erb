@@ -1,0 +1,30 @@
+<h1>Update Your Post</h1>
+
+<form class='form' method="POST" action="/edit-post">
+
+    <p class='center'>
+        <label for="title">Title</label>
+        <textarea type="text" id="title" name="[post]title" rows="1" maxlength="40"><%= $post.title %></textarea>
+    </p>
+
+    <p>
+        <label for="body">Body</label>
+            <p class='center'>
+        <textarea type="text" id='body' name="[post]body" rows="10" maxlength="150"><%= $post.body %></textarea>
+    </p>
+
+    <p class='center'>
+        <button type="submit">SUBMIT</button>
+    </p>
+
+</form>
+
+<form class='form' method="POST" action="/delete-post">
+
+    <input type="hidden" name="hidden_post_delete" value="<%= $post.id %>" />
+
+    <p class='center'>
+        <button type="submit">DELETE POST</button>
+    </p>
+
+</form>
