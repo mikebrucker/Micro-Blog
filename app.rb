@@ -83,10 +83,10 @@ post '/edit-account' do
     if params[:account_password] == user.password
         user.profile.update_attributes(fname: params[:fname], lname: params[:lname], email: params[:email])
         flash[:success] = "Your Profile has been Updated"
-        redirect '/profile'
     else
         flash[:notice] = "Incorrect Password"
     end
+    redirect '/profile'
 end
 
 post '/edit-password' do
