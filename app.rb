@@ -8,7 +8,7 @@ require './models/post.rb'
 
 enable :sessions
 
-configure(:development){set :database, "micro_blogging_app.sqlite3"}
+configure(:development){set :database, "sqlite3:micro_blogging_app.sqlite3"}
 
 get '/' do
     if session[:user_id]
