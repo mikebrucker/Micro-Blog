@@ -6,9 +6,10 @@ gem 'sinatra-activerecord'
 gem 'sinatra-flash'
 gem 'rake'
 
-group :development, :test do
+group :development do
     gem 'sqlite3' 
 end
+
 group :production do
     gem 'pg'
 end
