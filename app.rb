@@ -1,13 +1,14 @@
+require 'bundler/setup'
 require 'sinatra'
 require 'sinatra/activerecord'
 require 'sinatra/flash'
-require 'bundler/setup'
 require './models/user.rb'
 require './models/profile.rb'
 require './models/post.rb'
 
 enable :sessions
 
+# set :database, "sqlite3:micro_blogging_app.sqlite3"
 configure(:development){set :database, "sqlite3:micro_blogging_app.sqlite3"}
 
 get '/' do
@@ -30,39 +31,6 @@ end
 get '/edit_account' do
     am_i_logged_in    
     erb :edit_account
-end
-
-post '/edit-account' do 
-    user = current_user
-    if params[:account_password] == user.password
-        user.profile.update_attributes(fname: params[:fname], lname: params[:lname], email: params[:email])
-        flash[:success] = "Your Profile has been Updated"
-        redirect '/profile'
-    else
-        flash[:notice] = "Incorrect Password"
-    end
-end
-
-get '/edit_password' do
-    am_i_logged_in    
-    erb :edit_password
-end
-
-post '/edit-password' do
-    user = current_user
-    if params[:old_password] == "" || params[:new_password] == "" || params[:confirm_password] == ""
-        flash[:error] = "Please Fill Out All Fields."
-    end
-    if params[:old_password] == user.password   
-        if params[:new_password] == params[:confirm_password]
-            user.update_attributes(password: params[:new_password])
-            flash[:success] = "Your password has been updated."
-        end
-        redirect '/'
-    else
-        flash[:notice] = "Passwords Do Not Match"
-        redirect '/edit_password'
-    end
 end
 
 get '/registration' do
@@ -178,21 +146,6 @@ post '/sign-out' do
     end
     sign_out
     redirect '/'
-end
-
-post '/edit-post' do
-    Post.find(params[:id])
-    if user.Post.update_attributes(body: params[:post][:body])
-        flash[:success] = "Post Updated"
-        redirect '/profile' 
-    else
-        flash[:error] = "No Updates"
-    end
-end
-
-post '/delete-post' do
-    Post.delete(post.id)
-    redirect '/profile'
 end
 
 post '/delete-account' do
