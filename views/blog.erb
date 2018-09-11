@@ -1,13 +1,13 @@
-<a href='/create_post'><button class='profile_button'>CREATE POST</button></a>
+<p><a href='/create_post'><button class='profile_button'>CREATE POST</button></a></p>
 
 <h1>LAST 10 POSTS</h1>
 
 <% Post.all.reverse[0..9].each do |post| %>
+    <div class="post">
+        <h1><%= "#{User.find(post.user_id).username}'s Post:" %></h1>
+        
+        <h1><%= "Title: #{post.title}" %></h1>
 
-    <h1><%= "#{User.find(post.user_id).username}'s Post:" %></h1>
-    
-    <h1><%= "Title: #{post.title}" %></h1>
-
-    <p><%= "Body: #{post.body}" %></p>
-
+        <p><%= "Body: #{post.body}" %></p>
+    </div>
 <% end %>

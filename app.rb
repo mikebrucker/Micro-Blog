@@ -176,8 +176,8 @@ post '/find-edit-post' do
 end
 
 post '/edit-post' do
-    Post.find($post.id).update_attributes(title: params[:title])
-    Post.find($post.id).update_attributes(body: params[:body])
+    Post.find($post.id).update_attributes(title: params[:post][:title])
+    Post.find($post.id).update_attributes(body: params[:post][:body])
     redirect '/profile'
 end
 
