@@ -10,6 +10,7 @@
 <p><%= user.profile.email%></p>
 
 <% user.posts.each do |post| %>
+
     <div class="post">
         <p><%= "Title: #{post.title}" %></p>
         <p><%= "Body: #{post.body}" %></p>
@@ -18,4 +19,7 @@
             <button class='profile_button' type='submit'>EDIT POST</button>
         </form>
     </div>
+
 <% end %>
+
+
