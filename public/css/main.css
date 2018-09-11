@@ -4,6 +4,7 @@ body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     text-align: center;
     background: salmon;
+    word-break: break-word;
 }
 
 nav {
@@ -46,7 +47,7 @@ h1 {
     margin: 10px 0;
 }
 
-.form {
+.form, .post {
     margin: 0 auto;
     padding: 20px 0;
     max-width: 400px;
@@ -94,6 +95,14 @@ textarea {
     width: 200px;
     color: white;
     text-align: center;
+}
+
+.post {
+    margin: 10px auto;
+}
+
+.post p, .post h1 {
+    margin: 4px 10px;
 }
 
 .success {
