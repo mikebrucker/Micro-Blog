@@ -6,9 +6,17 @@ require './models/user.rb'
 require './models/profile.rb'
 require './models/post.rb'
 
+group :development do
+    gem 'sqlite3' 
+end
+group :production do
+    gem 'pg'
+end
+
 enable :sessions
 
-set :database, "sqlite3:micro_blogging_app.sqlite3"
+# set :database, "sqlite3:micro_blogging_app.sqlite3"
+configure(:development){set :database, "sqlite3:micro_blogging_app.sqlite3"}
 
 get '/' do
     if session[:user_id]
