@@ -1,6 +1,6 @@
 # Micro-Blog
 
-Sinatra Framework
+Sinatra Framework with Ruby
 
 A user can
 
